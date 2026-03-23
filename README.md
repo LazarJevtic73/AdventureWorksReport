@@ -90,9 +90,73 @@ Finally, in the Sales Data table, I added a Quantity Type column to distinguish 
 
 ## Measures
 
-% of All Orders = 
-DIVIDE(
-    [Total Orders], 
-    [All Orders]
-)
+```% of All Orders = DIVIDE([Total Orders], [All Orders])```<br>
+
+```% of All Returns = DIVIDE([Total Returns], [All Returns])```<br>
+
+```10 day Rolling Revenue = CALCULATE([Total Revenue], DATESINPERIOD('Calendar Lookup'[Date], MAX('Calendar Lookup'[Date]), -10, DAY))```<br>
+
+```90-day Rolling Profit = CALCULATE([Total Profit], DATESINPERIOD('Calendar Lookup'[Date], MAX('Calendar Lookup'[Date]), -90, DAY))```<br>
+
+```All Orders = CALCULATE([Total Orders], ALL('Sales Data'))```<br>
+
+```All Returns = CALCULATE([Total Returns], ALL('Returns Data'))```<br>
+
+```Average Retail Price = AVERAGE('Product Lookup'[ProductPrice])```<br>
+
+```Average Revenue per Customer = DIVIDE([Total Revenue], [Total Customers])```<br>
+
+```Bike Return Rate = CALCULATE([Return Rate], 'Product Categories Lookup'[CategoryName] = "Bikes")```<br>
+
+```Bike Returns = CALCULATE([Total Returns], 'Product Categories Lookup'[CategoryName] = "Bikes")```<br>
+
+```Bike Sales = CALCULATE([Quantity Sold], 'Product Categories Lookup'[CategoryName] = "Bikes")```<br>
+
+```Bulk Orders = CALCULATE([Total Orders], 'Sales Data'[OrderQuantity] > 1)```<br>
+
+```High Ticket Orders = CALCULATE([Total Orders], FILTER('Product Lookup', 'Product Lookup'[ProductPrice] > [Overall Average Price]))```<br>
+
+```Order Target = [Previous Month Orders] * 1.1```<br>
+
+```Order Target Gap = [Total Orders] - [Order Target]```<br>
+
+```Overall Average Price = CALCULATE([Average Retail Price], ALL('Product Lookup'))```<br>
+
+```Previous Month Orders = CALCULATE([Total Orders], DATEADD('Calendar Lookup'[Date], -1, MONTH))```<br>
+
+```Previous Month Returns = CALCULATE([Total Returns], DATEADD('Calendar Lookup'[Date], -1, MONTH))```<br>
+
+```Previous Month Revenue = CALCULATE([Total Revenue], DATEADD('Calendar Lookup'[Date], -1, MONTH))```<br>
+
+```Prevous Month Profit = CALCULATE([Total Profit], DATEADD('Calendar Lookup'[Date], -1, MONTH))```<br>
+
+```Profit Target = [Prevous Month Profit] * 1.1```<br>
+
+```Profit Target Gap = [Total Profit] - [Profit Target]```<br>
+
+```Quantity Returned = SUM('Returns Data'[ReturnQuantity])```<br>
+
+```Quantity Sold = SUM('Sales Data'[OrderQuantity])```<br>
+
+```Return Rate = DIVIDE([Quantity Returned], [Quantity Sold], "No sales")```<br>
+
+```Revenue Target = [Previous Month Revenue] * 1.1```<br>
+
+```Revenue Target Gap = [Total Revenue] - [Revenue Target]```<br>
+
+```Total Cost = SUMX('Sales Data', 'Sales Data'[OrderQuantity] * RELATED('Product Lookup'[ProductCost]))```<br>
+
+```Total Customers = DISTINCTCOUNT('Sales Data'[CustomerKey])```<br>
+
+```Total Orders = DISTINCTCOUNT('Sales Data'[OrderNumber])```<br>
+
+```Total Profit = [Total Revenue] - [Total Cost]```<br>
+
+```Total Returns = COUNT('Returns Data'[ReturnQuantity])```<br>
+
+```Total Revenue = SUMX('Sales Data', 'Sales Data'[OrderQuantity] * RELATED('Product Lookup'[ProductPrice]))```<br>
+
+```Weekend Orders = CALCULATE([Total Orders], 'Calendar Lookup'[Weekend] = "Weekend")```<br>
+
+```YTD Revenue = CALCULATE([Total Revenue], DATESYTD('Calendar Lookup'[Date]))```<br>
 
